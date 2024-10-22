@@ -1,0 +1,48 @@
+{
+	"$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"value": "shru1dfpractice"
+		},
+		"ls_AzureSqlDatabase1_password": {
+			"value": ""
+		},
+		"ls_SqlServer1_connectionString": {
+			"value": ""
+		},
+		"ls_Sql_Server_OnPrem_Dynamic_connectionString": {
+			"value": "Integrated Security=True;Data Source=@{linkedService().servename};Initial Catalog=@{linkedService().db}"
+		},
+		"ls_adlsgen2_accountKey": {
+			"value": ""
+		},
+		"ls_AzureSqlDatabase1_properties_typeProperties_server": {
+			"value": "shrusqlserver.database.windows.net"
+		},
+		"ls_AzureSqlDatabase1_properties_typeProperties_database": {
+			"value": "shrusqldatabase"
+		},
+		"ls_AzureSqlDatabase1_properties_typeProperties_userName": {
+			"value": "shruadmin"
+		},
+		"ls_Sql_Server_OnPrem_Dynamic_properties_typeProperties_userName": {
+			"value": "@{linkedService().username}"
+		},
+		"ls_adlsgen2_properties_typeProperties_url": {
+			"value": "https://sashrudevenv.dfs.core.windows.net/"
+		},
+		"TumblingWindow_properties_pipeline_parameters_servename": {
+			"value": "CHANDANCS\\SQLEXPRESS"
+		},
+		"TumblingWindow_properties_pipeline_parameters_db": {
+			"value": "C_Tech"
+		},
+		"TumblingWindow_properties_pipeline_parameters_username": {
+			"value": "CHANDANCS\\ChandanS"
+		},
+		"TumblingWindow_properties_pipeline_parameters_password": {
+			"value": "Amma@143"
+		}
+	}
+}

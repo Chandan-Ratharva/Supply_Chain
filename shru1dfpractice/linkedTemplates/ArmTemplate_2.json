@@ -1,0 +1,100 @@
+{
+	"$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"type": "string",
+			"metadata": "Data Factory name",
+			"defaultValue": "shru1dfpractice"
+		},
+		"TumblingWindow_properties_pipeline_parameters_servename": {
+			"type": "string",
+			"defaultValue": "CHANDANCS\\SQLEXPRESS"
+		},
+		"TumblingWindow_properties_pipeline_parameters_db": {
+			"type": "string",
+			"defaultValue": "C_Tech"
+		},
+		"TumblingWindow_properties_pipeline_parameters_username": {
+			"type": "string",
+			"defaultValue": "CHANDANCS\\ChandanS"
+		},
+		"TumblingWindow_properties_pipeline_parameters_password": {
+			"type": "string",
+			"defaultValue": "Amma@143"
+		}
+	},
+	"variables": {
+		"factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
+	},
+	"resources": [
+		{
+			"name": "[concat(parameters('factoryName'), '/pl_master_load')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Execute Pipeline1",
+						"description": "invoking pipeline",
+						"type": "ExecutePipeline",
+						"dependsOn": [],
+						"policy": {
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"pipeline": {
+								"referenceName": "pl_filter_activity_child",
+								"type": "PipelineReference"
+							},
+							"waitOnCompletion": true,
+							"parameters": {}
+						}
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {}
+				},
+				"annotations": [],
+				"lastPublishTime": "2024-10-18T03:23:22Z"
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/TumblingWindow')]",
+			"type": "Microsoft.DataFactory/factories/triggers",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"runtimeState": "Stopped",
+				"pipeline": {
+					"pipelineReference": {
+						"referenceName": "pl_Dynamic_para_OnPrem",
+						"type": "PipelineReference"
+					},
+					"parameters": {
+						"servename": "[parameters('TumblingWindow_properties_pipeline_parameters_servename')]",
+						"db": "[parameters('TumblingWindow_properties_pipeline_parameters_db')]",
+						"username": "[parameters('TumblingWindow_properties_pipeline_parameters_username')]",
+						"password": "[parameters('TumblingWindow_properties_pipeline_parameters_password')]"
+					}
+				},
+				"type": "TumblingWindowTrigger",
+				"typeProperties": {
+					"frequency": "Minute",
+					"interval": 5,
+					"startTime": "2024-10-08T08:36:00Z",
+					"endTime": "2024-10-18T03:07:00Z",
+					"delay": "00:10:00",
+					"maxConcurrency": 50,
+					"retryPolicy": {
+						"intervalInSeconds": 30
+					},
+					"dependsOn": []
+				}
+			},
+			"dependsOn": []
+		}
+	]
+}
