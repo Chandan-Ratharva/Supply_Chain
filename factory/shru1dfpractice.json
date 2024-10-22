@@ -1,0 +1,9 @@
+{
+	"name": "shru1dfpractice",
+	"location": "centralindia",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "61687e2d-e189-461b-bcde-c573b5d77747",
+		"tenantId": "1921b62a-4e2e-4899-9e1e-8d3339772464"
+	}
+}

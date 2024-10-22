@@ -1,0 +1,32 @@
+{
+	"name": "TumblingWindow",
+	"properties": {
+		"annotations": [],
+		"runtimeState": "Stopped",
+		"pipeline": {
+			"pipelineReference": {
+				"referenceName": "pl_Dynamic_para_OnPrem",
+				"type": "PipelineReference"
+			},
+			"parameters": {
+				"servename": "CHANDANCS\\SQLEXPRESS",
+				"db": "C_Tech",
+				"username": "CHANDANCS\\ChandanS",
+				"password": "Amma@143"
+			}
+		},
+		"type": "TumblingWindowTrigger",
+		"typeProperties": {
+			"frequency": "Minute",
+			"interval": 5,
+			"startTime": "2024-10-08T08:36:00Z",
+			"endTime": "2024-10-18T03:07:00Z",
+			"delay": "00:10:00",
+			"maxConcurrency": 50,
+			"retryPolicy": {
+				"intervalInSeconds": 30
+			},
+			"dependsOn": []
+		}
+	}
+}

@@ -1,0 +1,27 @@
+{
+	"name": "pl_master_load",
+	"properties": {
+		"activities": [
+			{
+				"name": "Execute Pipeline1",
+				"description": "invoking pipeline",
+				"type": "ExecutePipeline",
+				"dependsOn": [],
+				"policy": {
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "pl_filter_activity_child",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true
+				}
+			}
+		],
+		"annotations": [],
+		"lastPublishTime": "2024-10-18T03:23:22Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

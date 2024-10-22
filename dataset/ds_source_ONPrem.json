@@ -1,0 +1,32 @@
+{
+	"name": "ds_source_ONPrem",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "ls_Sql_Server_OnPrem_Dynamic",
+			"type": "LinkedServiceReference",
+			"parameters": {
+				"servename": "CHANDANCS\\SQLEXPRESS",
+				"db": "C_TEch",
+				"username": "CHANDANCS\\ChandanS",
+				"password": "Amma@143"
+			}
+		},
+		"annotations": [],
+		"type": "SqlServerTable",
+		"schema": [
+			{
+				"name": "CustomerID",
+				"type": "nvarchar"
+			},
+			{
+				"name": "CustomerName",
+				"type": "nvarchar"
+			}
+		],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "PatnerRevenue"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

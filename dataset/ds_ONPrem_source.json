@@ -1,0 +1,40 @@
+{
+	"name": "ds_ONPrem_source",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "ls_Sql_Server_OnPrem_Dynamic",
+			"type": "LinkedServiceReference",
+			"parameters": {
+				"servename": "CHANDANCS\\SQLEXPRESS",
+				"db": "C_Tech",
+				"username": "CHANDANCS\\ChandanS",
+				"password": "Amma@143"
+			}
+		},
+		"parameters": {
+			"Filename": {
+				"type": "string"
+			}
+		},
+		"annotations": [],
+		"type": "SqlServerTable",
+		"schema": [
+			{
+				"name": "CustomerID",
+				"type": "nvarchar"
+			},
+			{
+				"name": "CustomerName",
+				"type": "nvarchar"
+			}
+		],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": {
+				"value": "@dataset().Filename",
+				"type": "Expression"
+			}
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}
