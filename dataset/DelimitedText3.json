@@ -1,5 +1,5 @@
 {
-	"name": "DelimitedText2",
+	"name": "DelimitedText3",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "ls_adlsgen2",
@@ -19,39 +19,13 @@
 					"value": "@dataset().FileName",
 					"type": "Expression"
 				},
-				"fileSystem": "ouput"
+				"fileSystem": "input"
 			},
 			"columnDelimiter": ",",
 			"escapeChar": "\\",
 			"firstRowAsHeader": true,
 			"quoteChar": "\""
 		},
-		"schema": [
-			{
-				"name": "Make",
-				"type": "String"
-			},
-			{
-				"name": "Model",
-				"type": "String"
-			},
-			{
-				"name": "Type",
-				"type": "String"
-			},
-			{
-				"name": "Origin",
-				"type": "String"
-			},
-			{
-				"name": "DriveTrain",
-				"type": "String"
-			},
-			{
-				"name": "Length",
-				"type": "String"
-			}
-		]
-	},
-	"type": "Microsoft.DataFactory/factories/datasets"
+		"schema": []
+	}
 }
