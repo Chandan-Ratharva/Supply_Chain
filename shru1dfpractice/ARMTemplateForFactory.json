@@ -2247,6 +2247,193 @@
 			]
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/pl_untill1')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Until1",
+						"type": "Until",
+						"dependsOn": [],
+						"userProperties": [],
+						"typeProperties": {
+							"expression": {
+								"value": "@bool(variables('FILEAVAILABLE'))",
+								"type": "Expression"
+							},
+							"activities": [
+								{
+									"name": "Wait1",
+									"type": "Wait",
+									"dependsOn": [],
+									"userProperties": [],
+									"typeProperties": {
+										"waitTimeInSeconds": 15
+									}
+								},
+								{
+									"name": "Get Metadata1",
+									"type": "GetMetadata",
+									"dependsOn": [
+										{
+											"activity": "Wait1",
+											"dependencyConditions": [
+												"Succeeded"
+											]
+										}
+									],
+									"policy": {
+										"timeout": "0.12:00:00",
+										"retry": 0,
+										"retryIntervalInSeconds": 30,
+										"secureOutput": false,
+										"secureInput": false
+									},
+									"userProperties": [],
+									"typeProperties": {
+										"dataset": {
+											"referenceName": "ds_source_untill",
+											"type": "DatasetReference",
+											"parameters": {}
+										},
+										"fieldList": [
+											"exists"
+										],
+										"storeSettings": {
+											"type": "AzureBlobFSReadSettings",
+											"recursive": true,
+											"enablePartitionDiscovery": false
+										},
+										"formatSettings": {
+											"type": "DelimitedTextReadSettings"
+										}
+									}
+								},
+								{
+									"name": "If Condition1",
+									"type": "IfCondition",
+									"dependsOn": [
+										{
+											"activity": "Get Metadata1",
+											"dependencyConditions": [
+												"Succeeded"
+											]
+										}
+									],
+									"userProperties": [],
+									"typeProperties": {
+										"expression": {
+											"value": "@bool(activity('Get Metadata1').output.exists)",
+											"type": "Expression"
+										},
+										"ifTrueActivities": [
+											{
+												"name": "Set variable1",
+												"type": "SetVariable",
+												"dependsOn": [],
+												"policy": {
+													"secureOutput": false,
+													"secureInput": false
+												},
+												"userProperties": [],
+												"typeProperties": {
+													"variableName": "FILEAVAILABLE",
+													"value": "True"
+												}
+											}
+										]
+									}
+								}
+							],
+							"timeout": "0.12:00:00"
+						}
+					},
+					{
+						"name": "Copy data1",
+						"type": "Copy",
+						"dependsOn": [
+							{
+								"activity": "Until1",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "DelimitedTextSource",
+								"storeSettings": {
+									"type": "AzureBlobFSReadSettings",
+									"recursive": true,
+									"enablePartitionDiscovery": false
+								},
+								"formatSettings": {
+									"type": "DelimitedTextReadSettings"
+								}
+							},
+							"sink": {
+								"type": "DelimitedTextSink",
+								"storeSettings": {
+									"type": "AzureBlobFSWriteSettings"
+								},
+								"formatSettings": {
+									"type": "DelimitedTextWriteSettings",
+									"quoteAllText": true,
+									"fileExtension": ".txt"
+								}
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"typeConversion": true,
+								"typeConversionSettings": {
+									"allowDataTruncation": true,
+									"treatBooleanAsNumber": false
+								}
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "ds_source_untill",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "ds_cars_sink",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {}
+				},
+				"variables": {
+					"FILEAVAILABLE": {
+						"type": "String",
+						"defaultValue": "false"
+					}
+				},
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/ds_source_untill')]",
+				"[concat(variables('factoryId'), '/datasets/ds_cars_sink')]"
+			]
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/pl_variable_load')]",
 			"type": "Microsoft.DataFactory/factories/pipelines",
 			"apiVersion": "2018-06-01",
@@ -3278,6 +3465,39 @@
 					},
 					{
 						"name": "Length",
+						"type": "String"
+					}
+				]
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/ls_adlsgen2')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/ds_source_untill')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "ls_adlsgen2",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobFSLocation",
+						"fileName": "customer",
+						"fileSystem": "input"
+					},
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"firstRowAsHeader": true,
+					"quoteChar": "\""
+				},
+				"schema": [
+					{
+						"name": "��\u0011ࡱ\u001a�\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000>\u0000\u0003\u0000��\t\u0000\u0006\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0001\u0000\u0000\u00002\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0010\u0000\u0000����\u0000\u0000\u0000\u0000����\u0000\u0000\u0000\u00001\u0000\u0000\u0000������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������\t\b\u0010\u0000\u0000\u0006\u0005\u0000T8�\u0007�\u0000\u0002\u0000\u0006\b\u0000\u0000�\u0000\u0002\u0000�\u0004�\u0000\u0002\u0000\u0000\u0000�\u0000\u0000\u0000\\\u0000p\u0000\u0004\u0000\u0000Dell                                                                                                         B\u0000\u0002\u0000�\u0004a\u0001\u0002\u0000\u0000\u0000�\u0001\u0000\u0000=\u0001\u0002\u0000\u0001\u0000�\u0000\u0002\u0000\u0011\u0000\u0019\u0000\u0002\u0000\u0000\u0000\u0012\u0000\u0002\u0000\u0000\u0000\u0013\u0000\u0002\u0000\u0000\u0000�\u0001\u0002\u0000\u0000\u0000�\u0001\u0002\u0000\u0000\u0000=\u0000\u0012\u0000\u0000\u0000\u0000\u0000�Jv\u001b8\u0000\u0000\u0000\u0000\u0000\u0001\u0000X\u0002@\u0000\u0002\u0000\u0000\u0000�\u0000\u0002\u0000\u0000\u0000\"\u0000\u0002\u0000\u0000\u0000\u000e\u0000\u0002\u0000\u0001\u0000�\u0001\u0002\u0000\u0000\u0000�\u0000\u0002\u0000\u0000\u00001\u0000\u001e\u0000�\u0000\u0000\u0000\b\u0000�\u0001\u0000\u0000\u0000\u0002\u0000�\u0007\u0001C\u0000a\u0000l\u0000i\u0000b\u0000r\u0000i\u00001\u0000\u001e\u0000�\u0000\u0000\u0000\b\u0000�\u0001\u0000\u0000\u0000\u0002\u0000�\u0007\u0001C\u0000a\u0000l\u0000i\u0000b\u0000r\u0000i\u00001\u0000\u001e\u0000�\u0000\u0000\u0000\b\u0000�\u0001\u0000\u0000\u0000\u0002\u0000�\u0007\u0001C\u0000a\u0000l\u0000i\u0000b\u0000r\u0000i\u00001\u0000\u001e\u0000�\u0000\u0000\u0000\b\u0000�\u0001\u0000\u0000\u0000\u0002\u0000�\u0007\u0001C\u0000a\u0000l\u0000i\u0000b\u0000r\u0000i\u00001\u0000\u001e\u0000�\u0000\u0000\u0000\b\u0000�\u0001\u0000\u0000\u0000\u0002\u0000�\u0007\u0001C\u0000a\u0000l\u0000i\u0000b\u0000r\u0000i\u00001\u0000*\u0000h\u0001\u0000\u00006\u0000�\u0001\u0000\u0000\u0000\u0002\u0000�",
 						"type": "String"
 					}
 				]
