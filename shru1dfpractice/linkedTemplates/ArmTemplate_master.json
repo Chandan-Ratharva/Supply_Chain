@@ -93,12 +93,6 @@
 					"ls_adlsgen2_accountKey": {
 						"value": "[parameters('ls_adlsgen2_accountKey')]"
 					},
-					"ls_SqlServer1_connectionString": {
-						"value": "[parameters('ls_SqlServer1_connectionString')]"
-					},
-					"ls_Sql_Server_OnPrem_Dynamic_connectionString": {
-						"value": "[parameters('ls_Sql_Server_OnPrem_Dynamic_connectionString')]"
-					},
 					"ls_AzureSqlDatabase1_properties_typeProperties_server": {
 						"value": "[parameters('ls_AzureSqlDatabase1_properties_typeProperties_server')]"
 					},
@@ -110,9 +104,6 @@
 					},
 					"ls_adlsgen2_properties_typeProperties_url": {
 						"value": "[parameters('ls_adlsgen2_properties_typeProperties_url')]"
-					},
-					"ls_Sql_Server_OnPrem_Dynamic_properties_typeProperties_userName": {
-						"value": "[parameters('ls_Sql_Server_OnPrem_Dynamic_properties_typeProperties_userName')]"
 					}
 				}
 			},
@@ -131,6 +122,15 @@
 				"parameters": {
 					"factoryName": {
 						"value": "[parameters('factoryName')]"
+					},
+					"ls_SqlServer1_connectionString": {
+						"value": "[parameters('ls_SqlServer1_connectionString')]"
+					},
+					"ls_Sql_Server_OnPrem_Dynamic_connectionString": {
+						"value": "[parameters('ls_Sql_Server_OnPrem_Dynamic_connectionString')]"
+					},
+					"ls_Sql_Server_OnPrem_Dynamic_properties_typeProperties_userName": {
+						"value": "[parameters('ls_Sql_Server_OnPrem_Dynamic_properties_typeProperties_userName')]"
 					}
 				}
 			},

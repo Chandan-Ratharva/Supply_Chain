@@ -15,15 +15,6 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'accountKey' of 'ls_adlsgen2'"
 		},
-		"ls_SqlServer1_connectionString": {
-			"type": "secureString",
-			"metadata": "Secure string for 'connectionString' of 'ls_SqlServer1'"
-		},
-		"ls_Sql_Server_OnPrem_Dynamic_connectionString": {
-			"type": "secureString",
-			"metadata": "Secure string for 'connectionString' of 'ls_Sql_Server_OnPrem_Dynamic'",
-			"defaultValue": "Integrated Security=True;Data Source=@{linkedService().servename};Initial Catalog=@{linkedService().db}"
-		},
 		"ls_AzureSqlDatabase1_properties_typeProperties_server": {
 			"type": "string",
 			"defaultValue": "shrusqlserver.database.windows.net"
@@ -39,10 +30,6 @@
 		"ls_adlsgen2_properties_typeProperties_url": {
 			"type": "string",
 			"defaultValue": "https://sashrudevenv.dfs.core.windows.net/"
-		},
-		"ls_Sql_Server_OnPrem_Dynamic_properties_typeProperties_userName": {
-			"type": "string",
-			"defaultValue": "@{linkedService().username}"
 		}
 	},
 	"variables": {
@@ -71,6 +58,42 @@
 				},
 				"annotations": [],
 				"lastPublishTime": "2024-10-19T02:44:01Z"
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/pl_switch')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Set variable1",
+						"type": "SetVariable",
+						"dependsOn": [],
+						"policy": {
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"variableName": "date",
+							"value": {
+								"value": "@utcNow()",
+								"type": "Expression"
+							}
+						}
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {}
+				},
+				"variables": {
+					"date": {
+						"type": "String"
+					}
+				},
+				"annotations": []
 			},
 			"dependsOn": []
 		},
@@ -269,6 +292,39 @@
 					"quoteChar": "\""
 				},
 				"schema": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/ls_adlsgen2')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/ds_customer')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "ls_adlsgen2",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobFSLocation",
+						"fileName": "customer",
+						"fileSystem": "input"
+					},
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"firstRowAsHeader": true,
+					"quoteChar": "\""
+				},
+				"schema": [
+					{
+						"name": "��\u0011ࡱ\u001a�\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000>\u0000\u0003\u0000��\t\u0000\u0006\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0001\u0000\u0000\u00002\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0010\u0000\u0000����\u0000\u0000\u0000\u0000����\u0000\u0000\u0000\u00001\u0000\u0000\u0000������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������\t\b\u0010\u0000\u0000\u0006\u0005\u0000T8�\u0007�\u0000\u0002\u0000\u0006\b\u0000\u0000�\u0000\u0002\u0000�\u0004�\u0000\u0002\u0000\u0000\u0000�\u0000\u0000\u0000\\\u0000p\u0000\u0004\u0000\u0000Dell                                                                                                         B\u0000\u0002\u0000�\u0004a\u0001\u0002\u0000\u0000\u0000�\u0001\u0000\u0000=\u0001\u0002\u0000\u0001\u0000�\u0000\u0002\u0000\u0011\u0000\u0019\u0000\u0002\u0000\u0000\u0000\u0012\u0000\u0002\u0000\u0000\u0000\u0013\u0000\u0002\u0000\u0000\u0000�\u0001\u0002\u0000\u0000\u0000�\u0001\u0002\u0000\u0000\u0000=\u0000\u0012\u0000\u0000\u0000\u0000\u0000�Jv\u001b8\u0000\u0000\u0000\u0000\u0000\u0001\u0000X\u0002@\u0000\u0002\u0000\u0000\u0000�\u0000\u0002\u0000\u0000\u0000\"\u0000\u0002\u0000\u0000\u0000\u000e\u0000\u0002\u0000\u0001\u0000�\u0001\u0002\u0000\u0000\u0000�\u0000\u0002\u0000\u0000\u00001\u0000\u001e\u0000�\u0000\u0000\u0000\b\u0000�\u0001\u0000\u0000\u0000\u0002\u0000�\u0007\u0001C\u0000a\u0000l\u0000i\u0000b\u0000r\u0000i\u00001\u0000\u001e\u0000�\u0000\u0000\u0000\b\u0000�\u0001\u0000\u0000\u0000\u0002\u0000�\u0007\u0001C\u0000a\u0000l\u0000i\u0000b\u0000r\u0000i\u00001\u0000\u001e\u0000�\u0000\u0000\u0000\b\u0000�\u0001\u0000\u0000\u0000\u0002\u0000�\u0007\u0001C\u0000a\u0000l\u0000i\u0000b\u0000r\u0000i\u00001\u0000\u001e\u0000�\u0000\u0000\u0000\b\u0000�\u0001\u0000\u0000\u0000\u0002\u0000�\u0007\u0001C\u0000a\u0000l\u0000i\u0000b\u0000r\u0000i\u00001\u0000\u001e\u0000�\u0000\u0000\u0000\b\u0000�\u0001\u0000\u0000\u0000\u0002\u0000�\u0007\u0001C\u0000a\u0000l\u0000i\u0000b\u0000r\u0000i\u00001\u0000*\u0000h\u0001\u0000\u00006\u0000�\u0001\u0000\u0000\u0000\u0002\u0000�",
+						"type": "String"
+					}
+				]
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/linkedServices/ls_adlsgen2')]"
@@ -642,7 +698,7 @@
 			]
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/ds_source_cars')]",
+			"name": "[concat(parameters('factoryName'), '/ds_sales')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
 			"properties": {
@@ -655,7 +711,7 @@
 				"typeProperties": {
 					"location": {
 						"type": "AzureBlobFSLocation",
-						"fileName": "Cars_A2.csv",
+						"fileName": "sales",
 						"fileSystem": "input"
 					},
 					"columnDelimiter": ",",
@@ -692,60 +748,6 @@
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/linkedServices/ls_adlsgen2')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/ls_SqlServer1')]",
-			"type": "Microsoft.DataFactory/factories/linkedServices",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"annotations": [],
-				"type": "SqlServer",
-				"typeProperties": {
-					"connectionString": "[parameters('ls_SqlServer1_connectionString')]"
-				},
-				"connectVia": {
-					"referenceName": "selfhostedintegrationRuntime",
-					"type": "IntegrationRuntimeReference"
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/integrationRuntimes/selfhostedintegrationRuntime')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/ls_Sql_Server_OnPrem_Dynamic')]",
-			"type": "Microsoft.DataFactory/factories/linkedServices",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"parameters": {
-					"servename": {
-						"type": "String"
-					},
-					"db": {
-						"type": "String"
-					},
-					"username": {
-						"type": "String"
-					},
-					"password": {
-						"type": "String"
-					}
-				},
-				"annotations": [],
-				"type": "SqlServer",
-				"typeProperties": {
-					"connectionString": "[parameters('ls_Sql_Server_OnPrem_Dynamic_connectionString')]",
-					"userName": "[parameters('ls_Sql_Server_OnPrem_Dynamic_properties_typeProperties_userName')]",
-					"password": "@{linkedService().password}"
-				},
-				"connectVia": {
-					"referenceName": "Self-Hosted-IR-cv",
-					"type": "IntegrationRuntimeReference"
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/integrationRuntimes/Self-Hosted-IR-cv')]"
 			]
 		}
 	]
