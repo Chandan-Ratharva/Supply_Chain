@@ -64,7 +64,7 @@
 						"referenceName": "DelimitedText2",
 						"type": "DatasetReference",
 						"parameters": {
-							"FileName": {
+							"Folder": {
 								"value": "@pipeline().parameters.FileName",
 								"type": "Expression"
 							}

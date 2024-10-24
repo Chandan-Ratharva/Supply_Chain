@@ -14,7 +14,7 @@
 					},
 					"cases": [
 						{
-							"value": "output1",
+							"value": "Output1",
 							"activities": [
 								{
 									"name": "Copy data3",
@@ -83,7 +83,7 @@
 							]
 						},
 						{
-							"value": "output2",
+							"value": "Output2",
 							"activities": [
 								{
 									"name": "Copy data2",

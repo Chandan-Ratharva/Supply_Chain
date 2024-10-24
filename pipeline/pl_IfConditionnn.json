@@ -67,13 +67,7 @@
 							"outputs": [
 								{
 									"referenceName": "DelimitedText2",
-									"type": "DatasetReference",
-									"parameters": {
-										"FolderName": {
-											"value": "@pipeline().parameters.output2Folder",
-											"type": "Expression"
-										}
-									}
+									"type": "DatasetReference"
 								}
 							]
 						}
@@ -133,13 +127,7 @@
 							"outputs": [
 								{
 									"referenceName": "DelimitedText2",
-									"type": "DatasetReference",
-									"parameters": {
-										"FolderName": {
-											"value": "@pipeline().parameters.output1Folder",
-											"type": "Expression"
-										}
-									}
+									"type": "DatasetReference"
 								}
 							]
 						}
