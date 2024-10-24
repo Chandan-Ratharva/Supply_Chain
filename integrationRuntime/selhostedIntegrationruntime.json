@@ -1,0 +1,7 @@
+{
+	"name": "selhostedIntegrationruntime",
+	"properties": {
+		"type": "SelfHosted",
+		"description": "this is to connect to sql server on prem"
+	}
+}
