@@ -4,7 +4,6 @@
 		"activities": [
 			{
 				"name": "Switch1",
-				"description": "\n",
 				"type": "Switch",
 				"dependsOn": [],
 				"userProperties": [],
@@ -16,6 +15,75 @@
 					"cases": [
 						{
 							"value": "output1",
+							"activities": [
+								{
+									"name": "Copy data3",
+									"type": "Copy",
+									"dependsOn": [],
+									"policy": {
+										"timeout": "0.12:00:00",
+										"retry": 0,
+										"retryIntervalInSeconds": 30,
+										"secureOutput": false,
+										"secureInput": false
+									},
+									"userProperties": [],
+									"typeProperties": {
+										"source": {
+											"type": "DelimitedTextSource",
+											"storeSettings": {
+												"type": "AzureBlobFSReadSettings",
+												"recursive": true,
+												"enablePartitionDiscovery": false
+											},
+											"formatSettings": {
+												"type": "DelimitedTextReadSettings"
+											}
+										},
+										"sink": {
+											"type": "DelimitedTextSink",
+											"storeSettings": {
+												"type": "AzureBlobFSWriteSettings"
+											},
+											"formatSettings": {
+												"type": "DelimitedTextWriteSettings",
+												"quoteAllText": true,
+												"fileExtension": ".txt"
+											}
+										},
+										"enableStaging": false,
+										"translator": {
+											"type": "TabularTranslator",
+											"typeConversion": true,
+											"typeConversionSettings": {
+												"allowDataTruncation": true,
+												"treatBooleanAsNumber": false
+											}
+										}
+									},
+									"inputs": [
+										{
+											"referenceName": "DelimitedText1",
+											"type": "DatasetReference"
+										}
+									],
+									"outputs": [
+										{
+											"referenceName": "DelimitedText2",
+											"type": "DatasetReference",
+											"parameters": {
+												"Folder": {
+													"value": "@pipeline().parameters.FolderName",
+													"type": "Expression"
+												}
+											}
+										}
+									]
+								}
+							]
+						},
+						{
+							"value": "output2",
 							"activities": [
 								{
 									"name": "Copy data2",
@@ -64,21 +132,24 @@
 									},
 									"inputs": [
 										{
-											"referenceName": "ds_customer",
+											"referenceName": "DelimitedText1",
 											"type": "DatasetReference"
 										}
 									],
 									"outputs": [
 										{
-											"referenceName": "ds_customer_sink",
-											"type": "DatasetReference"
+											"referenceName": "DelimitedText2",
+											"type": "DatasetReference",
+											"parameters": {
+												"Folder": {
+													"value": "@pipeline().parameters.FolderName",
+													"type": "Expression"
+												}
+											}
 										}
 									]
 								}
 							]
-						},
-						{
-							"value": "Case2"
 						}
 					]
 				}
@@ -87,7 +158,7 @@
 		"parameters": {
 			"FolderName": {
 				"type": "string",
-				"defaultValue": "Output2"
+				"defaultValue": "Output1"
 			}
 		},
 		"variables": {
