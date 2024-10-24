@@ -1,0 +1,81 @@
+{
+	"name": "pl_script1",
+	"properties": {
+		"activities": [
+			{
+				"name": "DROP table",
+				"type": "Script",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"linkedServiceName": {
+					"referenceName": "ls_Sql_Server_OnPrem_Dynamic",
+					"type": "LinkedServiceReference",
+					"parameters": {
+						"servename": "CHANDANCS\\SQLEXPRESS",
+						"db": "C_Tech",
+						"username": "CHANDANCS\\ChandanS",
+						"password": "Amma@143"
+					}
+				},
+				"typeProperties": {
+					"scripts": [
+						{
+							"type": "NonQuery",
+							"text": "drop table PatnerRevenue_bkp"
+						}
+					],
+					"scriptBlockExecutionTimeout": "02:00:00"
+				}
+			},
+			{
+				"name": "Script1",
+				"type": "Script",
+				"dependsOn": [
+					{
+						"activity": "DROP table",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"linkedServiceName": {
+					"referenceName": "ls_Sql_Server_OnPrem_Dynamic",
+					"type": "LinkedServiceReference",
+					"parameters": {
+						"servename": "CHANDANCS\\SQLEXPRESS",
+						"db": "C_Tech",
+						"username": "CHANDANCS\\ChandanS",
+						"password": "Amma@143"
+					}
+				},
+				"typeProperties": {
+					"scripts": [
+						{
+							"type": "NonQuery",
+							"text": "select * into PatnerRevenue_bkp from [PatnerRevenue]"
+						}
+					],
+					"scriptBlockExecutionTimeout": "02:00:00"
+				}
+			}
+		],
+		"annotations": []
+	}
+}
