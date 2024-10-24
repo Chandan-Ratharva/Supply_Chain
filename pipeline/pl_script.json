@@ -1,0 +1,92 @@
+{
+	"name": "pl_script",
+	"properties": {
+		"activities": [
+			{
+				"name": "Drop table",
+				"type": "Script",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"linkedServiceName": {
+					"referenceName": "ls_Sql_Server_OnPrem_Dynamic",
+					"type": "LinkedServiceReference",
+					"parameters": {
+						"servename": "CHANDANCS\\SQLEXPRESS",
+						"db": "C_Tech",
+						"username": "CHANDANCS\\ChandanS",
+						"password": "Amma@143"
+					}
+				},
+				"typeProperties": {
+					"scripts": [
+						{
+							"type": "NonQuery",
+							"text": "drop table logging_Details"
+						}
+					],
+					"scriptBlockExecutionTimeout": "02:00:00"
+				}
+			},
+			{
+				"name": "Create Table",
+				"type": "Script",
+				"dependsOn": [
+					{
+						"activity": "Wait1",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"linkedServiceName": {
+					"referenceName": "ls_Sql_Server_OnPrem_Dynamic",
+					"type": "LinkedServiceReference",
+					"parameters": {
+						"servename": "CHANDANCS\\SQLEXPRESS"
+					}
+				},
+				"typeProperties": {
+					"scripts": [
+						{
+							"type": "NonQuery",
+							"text": "Create table logging_Details (PipelineName varchar(255),Runid varchar(255),Triqger_Type varchar(200),\nRunStart varchar(255),RunEnd varchar(255),ServerName varchar(255),Dbname varchar(200))"
+						}
+					],
+					"scriptBlockExecutionTimeout": "02:00:00"
+				}
+			},
+			{
+				"name": "Wait1",
+				"type": "Wait",
+				"dependsOn": [
+					{
+						"activity": "Drop table",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"waitTimeInSeconds": 10
+				}
+			}
+		],
+		"annotations": []
+	}
+}
