@@ -1,0 +1,47 @@
+{
+	"name": "ds_ONPRem_Source1",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "ls_ONPrem_server_1",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "SqlServerTable",
+		"schema": [
+			{
+				"name": "FiscalMonth",
+				"type": "datetime",
+				"precision": 23,
+				"scale": 3
+			},
+			{
+				"name": "Subscription",
+				"type": "nvarchar"
+			},
+			{
+				"name": "TenandID",
+				"type": "float",
+				"precision": 15
+			},
+			{
+				"name": "TenantName",
+				"type": "nvarchar"
+			},
+			{
+				"name": "BilledRev",
+				"type": "float",
+				"precision": 15
+			},
+			{
+				"name": "RefreshDate",
+				"type": "datetime",
+				"precision": 23,
+				"scale": 3
+			}
+		],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "PatnerRevenue_bkp"
+		}
+	}
+}
