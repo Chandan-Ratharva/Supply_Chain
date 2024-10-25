@@ -29,6 +29,40 @@
 	},
 	"resources": [
 		{
+			"name": "[concat(parameters('factoryName'), '/ds_source_ONPrem')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "ls_Sql_Server_OnPrem_Dynamic",
+					"type": "LinkedServiceReference",
+					"parameters": {
+						"servename": "CHANDANCS\\SQLEXPRESS",
+						"db": "C_TEch",
+						"username": "CHANDANCS\\ChandanS",
+						"password": "Amma@143"
+					}
+				},
+				"annotations": [],
+				"type": "SqlServerTable",
+				"schema": [
+					{
+						"name": "CustomerID",
+						"type": "nvarchar"
+					},
+					{
+						"name": "CustomerName",
+						"type": "nvarchar"
+					}
+				],
+				"typeProperties": {
+					"schema": "dbo",
+					"table": "PatnerRevenue"
+				}
+			},
+			"dependsOn": []
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/if_condition')]",
 			"type": "Microsoft.DataFactory/factories/pipelines",
 			"apiVersion": "2018-06-01",
@@ -246,7 +280,9 @@
 				"annotations": [],
 				"lastPublishTime": "2024-10-13T14:41:46Z"
 			},
-			"dependsOn": []
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/ds_source_ONPrem')]"
+			]
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/pl_Dynamic_para_OnPrem')]",
@@ -491,7 +527,9 @@
 				"annotations": [],
 				"lastPublishTime": "2024-10-18T02:44:09Z"
 			},
-			"dependsOn": []
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/ds_source_ONPrem')]"
+			]
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/pl_IFCONDITION')]",
@@ -1020,7 +1058,9 @@
 				"annotations": [],
 				"lastPublishTime": "2024-10-18T03:23:48Z"
 			},
-			"dependsOn": []
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/ds_source_ONPrem')]"
+			]
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/pl_master_load')]",
