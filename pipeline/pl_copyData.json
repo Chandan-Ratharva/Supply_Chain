@@ -50,7 +50,10 @@
 				"outputs": [
 					{
 						"referenceName": "ds_ouptut",
-						"type": "DatasetReference"
+						"type": "DatasetReference",
+						"parameters": {
+							"FileName": "dbo.PatnerRevenue_bkp.csv"
+						}
 					}
 				]
 			}
