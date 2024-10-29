@@ -52,7 +52,7 @@
 						"referenceName": "ds_ouptut",
 						"type": "DatasetReference",
 						"parameters": {
-							"FileName": "dbo.PatnerRevenue_bkp.csv"
+							"FileName": "dbo.PatnerRevenue_bkp"
 						}
 					}
 				]
