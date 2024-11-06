@@ -1,0 +1,54 @@
+{
+	"name": "ds_employe_onPrem",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "ls_ONPrem_server_1",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "SqlServerTable",
+		"schema": [
+			{
+				"name": "ID",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "E_NAME",
+				"type": "char"
+			},
+			{
+				"name": "E_ADDRESS",
+				"type": "varchar"
+			},
+			{
+				"name": "E_MULTI_STATES",
+				"type": "nvarchar"
+			},
+			{
+				"name": "PANNUMBER",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "BANKACCOUNTNUMBER",
+				"type": "bigint",
+				"precision": 19
+			},
+			{
+				"name": "DOJ",
+				"type": "date"
+			},
+			{
+				"name": "SALARY",
+				"type": "decimal",
+				"precision": 10,
+				"scale": 2
+			}
+		],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "EMPLOYEE_NEW"
+		}
+	}
+}
