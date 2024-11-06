@@ -24,7 +24,7 @@
 						"referenceName": "ds_employee",
 						"type": "DatasetReference",
 						"parameters": {
-							"FileName": "EMPLOYEE_NEW"
+							"FileName": "DEPARTMENT"
 						}
 					},
 					"firstRowOnly": false
@@ -90,7 +90,10 @@
 							"inputs": [
 								{
 									"referenceName": "ds_employe_onPrem",
-									"type": "DatasetReference"
+									"type": "DatasetReference",
+									"parameters": {
+										"FileName": "DEPARTMENT"
+									}
 								}
 							],
 							"outputs": [

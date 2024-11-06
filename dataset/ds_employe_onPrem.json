@@ -5,6 +5,11 @@
 			"referenceName": "ls_ONPrem_server_1",
 			"type": "LinkedServiceReference"
 		},
+		"parameters": {
+			"FileName": {
+				"type": "string"
+			}
+		},
 		"annotations": [],
 		"type": "SqlServerTable",
 		"schema": [
@@ -48,7 +53,10 @@
 		],
 		"typeProperties": {
 			"schema": "dbo",
-			"table": "EMPLOYEE_NEW"
+			"table": {
+				"value": "@dataset().FileName",
+				"type": "Expression"
+			}
 		}
 	}
 }
