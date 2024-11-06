@@ -6,20 +6,28 @@
 			"sources": [
 				{
 					"dataset": {
-						"referenceName": "ds_source_df_emp",
+						"referenceName": "ds_employe_DF",
 						"type": "DatasetReference"
 					},
 					"name": "employeenew"
 				},
 				{
 					"dataset": {
-						"referenceName": "ds_source_df_dept",
+						"referenceName": "ds_dept_df",
 						"type": "DatasetReference"
 					},
 					"name": "deparment"
 				}
 			],
-			"sinks": [],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "ds_emp_Dept_df",
+						"type": "DatasetReference"
+					},
+					"name": "sink1"
+				}
+			],
 			"transformations": [
 				{
 					"name": "join1"
@@ -27,37 +35,53 @@
 			],
 			"scriptLines": [
 				"source(output(",
-				"          ID as integer,",
+				"          ID as string,",
 				"          E_NAME as string,",
 				"          E_ADDRESS as string,",
 				"          E_MULTI_STATES as string,",
-				"          PANNUMBER as integer,",
-				"          BANKACCOUNTNUMBER as long,",
-				"          DOJ as date,",
-				"          SALARY as decimal(10,2)",
+				"          PANNUMBER as string,",
+				"          BANKACCOUNTNUMBER as string,",
+				"          DOJ as string,",
+				"          SALARY as string",
 				"     ),",
 				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false,",
 				"     enableCdc: true,",
 				"     mode: 'read',",
 				"     skipInitialLoad: false,",
-				"     isolationLevel: 'READ_UNCOMMITTED',",
-				"     format: 'table',",
+				"     maxColumns: 20480,",
 				"     partitionBy('hash', 1)) ~> employeenew",
 				"source(output(",
-				"          DEPT_ID as integer,",
+				"          DEPT_ID as string,",
 				"          DEPT_NAME as string,",
-				"          MANAGER_ID as integer",
+				"          MANAGER_ID as string",
 				"     ),",
 				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
-				"     isolationLevel: 'READ_UNCOMMITTED',",
-				"     format: 'table') ~> deparment",
+				"     ignoreNoFilesFound: false) ~> deparment",
 				"employeenew, deparment join(ID == MANAGER_ID,",
-				"     joinType:'inner',",
+				"     joinType:'outer',",
 				"     matchType:'exact',",
 				"     ignoreSpaces: false,",
-				"     broadcast: 'auto')~> join1"
+				"     broadcast: 'auto')~> join1",
+				"join1 sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     input(",
+				"          FiscalMonth as string,",
+				"          Subscription as string,",
+				"          TenandID as string,",
+				"          TenantName as string,",
+				"          BilledRev as string,",
+				"          RefreshDate as string",
+				"     ),",
+				"     partitionFileNames:['Emp_Dept'],",
+				"     umask: 0022,",
+				"     preCommands: [],",
+				"     postCommands: [],",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     partitionBy('hash', 1)) ~> sink1"
 			]
 		}
 	}
