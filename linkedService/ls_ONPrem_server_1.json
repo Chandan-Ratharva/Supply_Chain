@@ -5,9 +5,9 @@
 		"annotations": [],
 		"type": "SqlServer",
 		"typeProperties": {
-			"connectionString": "integrated security=True;data source=CHANDANCS\\SQLEXPRESS;initial catalog=C_Tech",
+			"connectionString": "integrated security=True;data source=CHANDANCS\\SQLEXPRESS;initial catalog=CTech",
 			"userName": "CHANDANCS\\ChandanS",
-			"encryptedCredential": "eyJDcmVkZW50aWFsSWQiOiJiOGVkZDJkNS05NTA5LTQzNjctYWFjMi1mNTZkM2M5YTQwYTIiLCJWZXJzaW9uIjoiMi4wIiwiQ2xhc3NUeXBlIjoiTWljcm9zb2Z0LkRhdGFQcm94eS5Db3JlLkludGVyU2VydmljZURhdGFDb250cmFjdC5DcmVkZW50aWFsU1UwNkNZMTQifQ=="
+			"encryptedCredential": "eyJDcmVkZW50aWFsSWQiOiJiYmQyMDVmNS00YzRjLTQ4YzYtOTFhMy00YjJjMDc5ZTYyNDQiLCJWZXJzaW9uIjoiMi4wIiwiQ2xhc3NUeXBlIjoiTWljcm9zb2Z0LkRhdGFQcm94eS5Db3JlLkludGVyU2VydmljZURhdGFDb250cmFjdC5DcmVkZW50aWFsU1UwNkNZMTQifQ=="
 		},
 		"connectVia": {
 			"referenceName": "Self-Hosted-IR-cv",
