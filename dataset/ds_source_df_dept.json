@@ -1,0 +1,31 @@
+{
+	"name": "ds_source_df_dept",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "ls_ONPrem_server_1",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "SqlServerTable",
+		"schema": [
+			{
+				"name": "DEPT_ID",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "DEPT_NAME",
+				"type": "varchar"
+			},
+			{
+				"name": "MANAGER_ID",
+				"type": "int",
+				"precision": 10
+			}
+		],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "DEPARTMENT"
+		}
+	}
+}

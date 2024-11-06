@@ -6,31 +6,58 @@
 			"sources": [
 				{
 					"dataset": {
-						"referenceName": "DelimitedText1",
+						"referenceName": "ds_source_df_emp",
 						"type": "DatasetReference"
 					},
-					"name": "copycars"
+					"name": "employeenew"
+				},
+				{
+					"dataset": {
+						"referenceName": "ds_source_df_dept",
+						"type": "DatasetReference"
+					},
+					"name": "deparment"
 				}
 			],
 			"sinks": [],
-			"transformations": [],
+			"transformations": [
+				{
+					"name": "join1"
+				}
+			],
 			"scriptLines": [
 				"source(output(",
-				"          Make as integer,",
-				"          Model as string,",
-				"          Type as string,",
-				"          Origin as string,",
-				"          DriveTrain as string,",
-				"          Length as integer",
+				"          ID as integer,",
+				"          E_NAME as string,",
+				"          E_ADDRESS as string,",
+				"          E_MULTI_STATES as string,",
+				"          PANNUMBER as integer,",
+				"          BANKACCOUNTNUMBER as long,",
+				"          DOJ as date,",
+				"          SALARY as decimal(10,2)",
 				"     ),",
 				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
-				"     ignoreNoFilesFound: false,",
 				"     enableCdc: true,",
 				"     mode: 'read',",
 				"     skipInitialLoad: false,",
-				"     maxColumns: 20480,",
-				"     partitionBy('hash', 1)) ~> copycars"
+				"     isolationLevel: 'READ_UNCOMMITTED',",
+				"     format: 'table',",
+				"     partitionBy('hash', 1)) ~> employeenew",
+				"source(output(",
+				"          DEPT_ID as integer,",
+				"          DEPT_NAME as string,",
+				"          MANAGER_ID as integer",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     isolationLevel: 'READ_UNCOMMITTED',",
+				"     format: 'table') ~> deparment",
+				"employeenew, deparment join(ID == MANAGER_ID,",
+				"     joinType:'inner',",
+				"     matchType:'exact',",
+				"     ignoreSpaces: false,",
+				"     broadcast: 'auto')~> join1"
 			]
 		}
 	}
