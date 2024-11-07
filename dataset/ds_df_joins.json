@@ -1,0 +1,47 @@
+{
+	"name": "ds_df_joins",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "ls_adlsgen2",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileSystem": "ouput"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": [
+			{
+				"name": "FiscalMonth",
+				"type": "String"
+			},
+			{
+				"name": "Subscription",
+				"type": "String"
+			},
+			{
+				"name": "TenandID",
+				"type": "String"
+			},
+			{
+				"name": "TenantName",
+				"type": "String"
+			},
+			{
+				"name": "BilledRev",
+				"type": "String"
+			},
+			{
+				"name": "RefreshDate",
+				"type": "String"
+			}
+		]
+	}
+}

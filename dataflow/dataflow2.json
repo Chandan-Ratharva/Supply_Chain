@@ -1,0 +1,81 @@
+{
+	"name": "dataflow2",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "ds_employee_new_source",
+						"type": "DatasetReference"
+					},
+					"name": "employee"
+				},
+				{
+					"dataset": {
+						"referenceName": "ds_department_source",
+						"type": "DatasetReference"
+					},
+					"name": "department"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "ds_df_joins",
+						"type": "DatasetReference"
+					},
+					"name": "sink1"
+				}
+			],
+			"transformations": [
+				{
+					"name": "join1"
+				}
+			],
+			"scriptLines": [
+				"source(output(",
+				"          ID as string,",
+				"          E_NAME as string,",
+				"          E_ADDRESS as string,",
+				"          E_MULTI_STATES as string,",
+				"          PANNUMBER as string,",
+				"          BANKACCOUNTNUMBER as string,",
+				"          DOJ as string,",
+				"          SALARY as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> employee",
+				"source(output(",
+				"          DEPT_ID as string,",
+				"          DEPT_NAME as string,",
+				"          MANAGER_ID as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> department",
+				"employee, department join(ID == MANAGER_ID,",
+				"     joinType:'inner',",
+				"     matchType:'exact',",
+				"     ignoreSpaces: false,",
+				"     broadcast: 'auto')~> join1",
+				"join1 sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     input(",
+				"          FiscalMonth as string,",
+				"          Subscription as string,",
+				"          TenandID as string,",
+				"          TenantName as string,",
+				"          BilledRev as string,",
+				"          RefreshDate as string",
+				"     ),",
+				"     umask: 0022,",
+				"     preCommands: [],",
+				"     postCommands: [],",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> sink1"
+			]
+		}
+	}
+}

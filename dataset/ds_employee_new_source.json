@@ -1,0 +1,56 @@
+{
+	"name": "ds_employee_new_source",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "ls_adlsgen2",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileName": "EMPLOYEE_NEW.csv",
+				"fileSystem": "landing-zone"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": [
+			{
+				"name": "ID",
+				"type": "String"
+			},
+			{
+				"name": "E_NAME",
+				"type": "String"
+			},
+			{
+				"name": "E_ADDRESS",
+				"type": "String"
+			},
+			{
+				"name": "E_MULTI_STATES",
+				"type": "String"
+			},
+			{
+				"name": "PANNUMBER",
+				"type": "String"
+			},
+			{
+				"name": "BANKACCOUNTNUMBER",
+				"type": "String"
+			},
+			{
+				"name": "DOJ",
+				"type": "String"
+			},
+			{
+				"name": "SALARY",
+				"type": "String"
+			}
+		]
+	}
+}
