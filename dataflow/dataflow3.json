@@ -12,7 +12,15 @@
 					"name": "source1"
 				}
 			],
-			"sinks": [],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "ds_df_joins",
+						"type": "DatasetReference"
+					},
+					"name": "sink1"
+				}
+			],
 			"transformations": [
 				{
 					"name": "derivedColumn1"
@@ -40,7 +48,22 @@
 				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     ignoreNoFilesFound: false) ~> source1",
-				"source1 derive(futureDate = addDays(toDate(Date,'MM/dd/yyyy','en-US'),20)) ~> derivedColumn1"
+				"source1 derive(futureDate = addDays(toDate(Date,'MM/dd/yyyy','en-US'),20)) ~> derivedColumn1",
+				"derivedColumn1 sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     input(",
+				"          FiscalMonth as string,",
+				"          Subscription as string,",
+				"          TenandID as string,",
+				"          TenantName as string,",
+				"          BilledRev as string,",
+				"          RefreshDate as string",
+				"     ),",
+				"     umask: 0022,",
+				"     preCommands: [],",
+				"     postCommands: [],",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> sink1"
 			]
 		}
 	}
