@@ -70,7 +70,7 @@
 				"          BilledRev as string,",
 				"          RefreshDate as string",
 				"     ),",
-				"     partitionFileNames:['Emp_Dept'],",
+				"     partitionFileNames:['Emp_Dept.csv'],",
 				"     umask: 0022,",
 				"     preCommands: [],",
 				"     postCommands: [],",
