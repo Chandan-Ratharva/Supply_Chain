@@ -70,11 +70,13 @@
 				"          BilledRev as string,",
 				"          RefreshDate as string",
 				"     ),",
+				"     partitionFileNames:['Emp_Dept'],",
 				"     umask: 0022,",
 				"     preCommands: [],",
 				"     postCommands: [],",
 				"     skipDuplicateMapInputs: true,",
-				"     skipDuplicateMapOutputs: true) ~> sink1"
+				"     skipDuplicateMapOutputs: true,",
+				"     partitionBy('hash', 1)) ~> sink1"
 			]
 		}
 	}
